@@ -10,49 +10,57 @@ class Employee:
 class Company:
     def __init__(self, name):
         self.name = name
+
+        # Private attribute
         self.__employees = []
 
     def add_employee(self, employee):
-        """Menambahkan employee ke perusahaan."""
+        # Validasi objek
         if not isinstance(employee, Employee):
-            raise TypeError(
-                "Objek yang ditambahkan harus merupakan Employee."
-            )
+            raise TypeError("Data yang dimasukkan harus berupa Employee.")
 
         self.__employees.append(employee)
+        print(f"{employee.name} berhasil ditambahkan.")
 
     def show_employees(self):
-        """Menampilkan seluruh karyawan."""
-        print(f"\n=== Karyawan {self.name} ===")
+        print(f"\nDaftar Karyawan {self.name}")
 
-        if not self.__employees:
+        if len(self.__employees) == 0:
             print("Belum ada karyawan.")
             return
 
         for employee in self.__employees:
-            print(employee)
+            print(f"- {employee}")
 
     def __calculate_payroll(self):
-        """Menghitung total seluruh gaji karyawan."""
-        return sum(employee.salary for employee in self.__employees)
+        total = 0
+
+        for employee in self.__employees:
+            total += employee.salary
+
+        return total
 
     def show_payroll(self):
-        """Menampilkan total payroll perusahaan."""
         total = self.__calculate_payroll()
 
-        print("\n=== Payroll ===")
-        print(f"Total gaji: Rp{total:,.0f}")
+        print(f"\nTotal Payroll {self.name}")
+        print(f"Rp{total:,.0f}")
 
 
-# ==============================
-# TEST PROGRAM
-# ==============================
+# ==================================
+# PROGRAM UTAMA
+# ==================================
 
-company = Company("PT Teknologi Manado")
+company = Company("PT Teknologi Nusantara")
 
-company.add_employee(Employee("Ben", 4_700_000))
-company.add_employee(Employee("Adi", 7_300_000))
-company.add_employee(Employee("Rara", 6_500_000))
+employee1 = Employee("Ben", 4700000)
+employee2 = Employee("Adi", 7300000)
+employee3 = Employee("Rara", 5200000)
+
+company.add_employee(employee1)
+company.add_employee(employee2)
+company.add_employee(employee3)
 
 company.show_employees()
+
 company.show_payroll()
